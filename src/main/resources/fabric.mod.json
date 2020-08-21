@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "skystruct",
+  "version": "${version}",
+  "name": "SkyStruct",
+  "description": "Spawns Structures in the Immersive Portals Alternate Dimension 2",
+  "authors": [
+    "thakyZ",
+    "cat2002"
+  ],
+  "contact": {
+    "website": "website",
+    "repo": "https://github.com/thakyZ/EnderTower"
+  },
+  "license": "MIT",
+  "icon": "assets/skystruct/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "xyz.nekogaming.mods.structure.skystruct.SkyStruct"
+    ]
+  },
+  "mixins": [
+    "skystruct.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.8.9+build.203",
+    "fabric": "*",
+    "minecraft": "1.16.1",
+    "immersive_portals": "*"
+  }
+}
