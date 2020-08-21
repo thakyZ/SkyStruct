@@ -14,6 +14,7 @@ import net.minecraft.util.BlockRotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockBox;
 import net.minecraft.util.math.ChunkPos;
+import net.minecraft.world.Heightmap;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.gen.ChunkRandom;
@@ -37,7 +38,7 @@ public class EnderTowerStructurePiece extends SimpleStructurePiece {
 
     public EnderTowerStructurePiece(StructureManager manager, CompoundTag tag) {
         super(SkyStruct.ENDER_TOWER_PIECE, tag);
-        this.template = new Identifier(tag.getString("Template"));
+        this.template = new Identifier(SkyStruct.MODID + ":tower/endertower");
         Structure structure = manager.getStructureOrBlank(this.template);
         this.processProperties(structure, new BlockPos(structure.getSize().getX() / 2, 0, structure.getSize().getZ() / 2));
     }
@@ -50,13 +51,8 @@ public class EnderTowerStructurePiece extends SimpleStructurePiece {
 
     public boolean generate(ServerWorldAccess serverWorldAccess, StructureAccessor structureAccessor, ChunkGenerator chunkGenerator, Random random, BlockBox boundingBox, ChunkPos chunkPos, BlockPos blockPos) {
         SkyStruct.LOGGER.info("This is a test 2.");
-        if (!boundingBox.contains(this.pos)) {
-            return true;
-        }
-        else {
-            boundingBox.encompass(this.structure.calculateBoundingBox(this.placementData, this.pos));
-            return super.generate(serverWorldAccess, structureAccessor, chunkGenerator, random, boundingBox, chunkPos, blockPos);
-        }
+        BlockPos topPos = serverWorldAccess.getTopPosition(Heightmap.Type.WORLD_SURFACE, blockPos);
+        return super.generate(serverWorldAccess, structureAccessor, chunkGenerator, random, boundingBox, chunkPos, topPos);
     }
 
     protected void handleMetadata(String metadata, BlockPos pos, WorldAccess world, Random random, BlockBox boundingBox) {

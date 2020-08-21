@@ -40,7 +40,7 @@ public class EnderTowerStructure extends StructureFeature<DefaultFeatureConfig> 
     }
 
     private static int getPlacementHeight(Random random, int i, int j) {
-        return choosePlacementHeight(random, 70, (i - j));
+        return i - j + choose(random, 2, 8);
     }
 
     public static class Start extends StructureStart<DefaultFeatureConfig> {
@@ -49,20 +49,25 @@ public class EnderTowerStructure extends StructureFeature<DefaultFeatureConfig> 
         }
 
         public void init(ChunkGenerator chunkGenerator, StructureManager structureManager, int i, int j, Biome biome, DefaultFeatureConfig featureConfig) {
-            Identifier identifier2 = new Identifier(SkyStruct.MODID + "tower/endertower");
+            Identifier identifier2 = new Identifier(SkyStruct.MODID + ":tower/endertower");
             Structure structure = structureManager.getStructureOrBlank(identifier2);
             SkyStruct.LOGGER.info("This is a test 3: size: [" + structure.getSize().getX() + ", " + structure.getSize().getY() + ", " + structure.getSize().getZ() + "]");
-            BlockRotation blockRotation = (BlockRotation) Util.getRandom((Object[])BlockRotation.values(), this.random);
-            BlockMirror blockMirror = this.random.nextFloat() < 0.5F ? BlockMirror.NONE : BlockMirror.FRONT_BACK;
+            BlockRotation blockRotation = BlockRotation.NONE;
+            BlockMirror blockMirror = BlockMirror.NONE;
             BlockPos blockPos = new BlockPos(structure.getSize().getX() / 2, 0, structure.getSize().getZ() / 2);
             BlockPos blockPos2 = (new ChunkPos(i, j)).getCenterBlockPos();
             BlockBox blockBox = structure.method_27267(blockPos2, blockRotation, blockPos, blockMirror);
             Vec3i vec3i = blockBox.getCenter();
             int k = vec3i.getX();
             int l = vec3i.getZ();
-            int m = chunkGenerator.getHeight(k, l, Heightmap.Type.WORLD_SURFACE_WG) - 1;
+            int m = chunkGenerator.getHeight(k, l, Heightmap.Type.WORLD_SURFACE) - 1;
+            SkyStruct.LOGGER.info("This is a test 2: blockBox.getCenter(): [" +  blockBox.getCenter().getX() + ", " +  blockBox.getCenter().getY() + ", " +  blockBox.getCenter().getZ() + "]");
+            SkyStruct.LOGGER.info("This is a test 3: [k, l]: [" + k + ", " + l + "]");
+            SkyStruct.LOGGER.info("This is a test 4: [m, blockBox.getBlockCountY()]: [" + m + ", " + blockBox.getBlockCountY() + "]");
             int n = EnderTowerStructure.getPlacementHeight(this.random, m, blockBox.getBlockCountY());
-            BlockPos blockPos3 = new BlockPos(blockPos2.getX(), n, blockPos2.getZ());
+            BlockPos blockPos3 = new BlockPos(blockPos2.getX(), m, blockPos2.getZ());
+            SkyStruct.LOGGER.info("This is a test 5: blockPos2: [" + blockPos2.getX() + ", " + blockPos2.getY() + ", " + blockPos2.getZ() + "]");
+            SkyStruct.LOGGER.info("This is a test 6: blockPos3: [" + blockPos3.getX() + ", " + blockPos3.getY() + ", " + blockPos3.getZ() + "]");
             this.children.add(new EnderTowerStructurePiece(blockPos3, identifier2, structure, blockPos));
             this.setBoundingBoxFromChildren();
         }
