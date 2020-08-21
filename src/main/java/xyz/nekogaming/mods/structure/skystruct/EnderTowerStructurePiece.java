@@ -44,11 +44,12 @@ public class EnderTowerStructurePiece extends SimpleStructurePiece {
 
     private void processProperties(Structure structure, BlockPos center) {
         StructurePlacementData structurePlacementData = (new StructurePlacementData()).setRotation(BlockRotation.NONE).setMirror(BlockMirror.NONE).setPosition(center).addProcessor(BlockIgnoreStructureProcessor.IGNORE_STRUCTURE_BLOCKS);;
-
+        SkyStruct.LOGGER.info("This is a test 1: size: [" + structure.getSize().getX() + ", " + structure.getSize().getY() + ", " + structure.getSize().getZ() + "]");
         this.setStructureData(structure, this.pos, structurePlacementData);
     }
 
     public boolean generate(ServerWorldAccess serverWorldAccess, StructureAccessor structureAccessor, ChunkGenerator chunkGenerator, Random random, BlockBox boundingBox, ChunkPos chunkPos, BlockPos blockPos) {
+        SkyStruct.LOGGER.info("This is a test 2.");
         if (!boundingBox.contains(this.pos)) {
             return true;
         }

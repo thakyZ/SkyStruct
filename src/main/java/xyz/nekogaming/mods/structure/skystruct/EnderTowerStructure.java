@@ -49,8 +49,9 @@ public class EnderTowerStructure extends StructureFeature<DefaultFeatureConfig> 
         }
 
         public void init(ChunkGenerator chunkGenerator, StructureManager structureManager, int i, int j, Biome biome, DefaultFeatureConfig featureConfig) {
-            Identifier identifier2 = new Identifier(SkyStruct.MODID + ":tower/endertower");
+            Identifier identifier2 = new Identifier(SkyStruct.MODID + "tower/endertower");
             Structure structure = structureManager.getStructureOrBlank(identifier2);
+            SkyStruct.LOGGER.info("This is a test 3: size: [" + structure.getSize().getX() + ", " + structure.getSize().getY() + ", " + structure.getSize().getZ() + "]");
             BlockRotation blockRotation = (BlockRotation) Util.getRandom((Object[])BlockRotation.values(), this.random);
             BlockMirror blockMirror = this.random.nextFloat() < 0.5F ? BlockMirror.NONE : BlockMirror.FRONT_BACK;
             BlockPos blockPos = new BlockPos(structure.getSize().getX() / 2, 0, structure.getSize().getZ() / 2);

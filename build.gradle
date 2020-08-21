@@ -26,18 +26,16 @@ dependencies {
     //to change the versions see the gradle.properties file
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
     mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
-    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    modCompile "net.fabricmc:fabric-loader:${project.loader_version}"
 
     // Fabric API. This is technically optional, but you probably want it anyway.
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
+    //Dependencies
     modImplementation "com.github.qouteall:ImmersivePortalsMod:${project.immersive_portals_version}"
-    include "com.github.qouteall:ImmersivePortalsMod:${project.immersive_portals_version}"
 
     modImplementation "net.earthcomputer:libstructure:${project.libstructure_version}"
     include "net.earthcomputer:libstructure:${project.libstructure_version}"
-
-    compileOnly 'com.github.JetBrains:java-annotations:20.0.0'
 
     compileOnly ("com.google.code.findbugs:jsr305:3.0.2") { transitive = false }
 
