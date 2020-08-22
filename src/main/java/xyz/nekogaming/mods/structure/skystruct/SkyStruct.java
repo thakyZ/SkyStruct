@@ -28,14 +28,7 @@ public class SkyStruct implements ModInitializer {
 
     public static void putStructures(Biome biome) {
         if(biome.getCategory() != Biome.Category.OCEAN && biome.getCategory() != Biome.Category.RIVER) {
-            LOGGER.info("Adding endertower:endertower to biome: " + biome.getName());
             biome.addStructureFeature(ENDER_TOWER_CONFIG);
-            if (biome.hasStructureFeature(ENDER_TOWER)) {
-                LOGGER.info("Structures has successfully been added.");
-            }
-            else {
-                LOGGER.warn("Structures have not been successfully added to: " + biome.getName());
-            }
         }
     }
 

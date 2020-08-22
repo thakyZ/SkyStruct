@@ -14,7 +14,7 @@ import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import net.minecraft.world.gen.feature.StructureFeature;
 
 public class Utils {
-    public static BlockPos locateStructureFast(WorldView worldView, StructureAccessor structureAccessor, BlockPos blockPos, int radius, boolean skipExistingChunks, long seed, StructureConfig structureConfig, StructureFeature<DefaultFeatureConfig> structure) {
+    public static BlockPos locateStructureFast(WorldView worldView, StructureAccessor structureAccessor, BlockPos blockPos, boolean skipExistingChunks, long seed, StructureConfig structureConfig, StructureFeature<DefaultFeatureConfig> structure) {
         int spacing = structureConfig.getSpacing();
         int chunkX = blockPos.getX() >> 4;
         int chunkZ = blockPos.getZ() >> 4;
