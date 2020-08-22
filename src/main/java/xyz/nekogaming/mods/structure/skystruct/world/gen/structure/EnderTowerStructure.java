@@ -1,22 +1,24 @@
-package xyz.nekogaming.mods.structure.skystruct;
+package xyz.nekogaming.mods.structure.skystruct.world.gen.structure;
 
 import com.qouteall.immersive_portals.ModMain;
 import net.minecraft.structure.Structure;
 import net.minecraft.structure.StructureManager;
 import net.minecraft.structure.StructureStart;
-import net.minecraft.util.BlockMirror;
-import net.minecraft.util.BlockRotation;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockBox;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
-import net.minecraft.world.*;
+import net.minecraft.world.Heightmap;
+import net.minecraft.world.WorldView;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.StructureAccessor;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.chunk.StructureConfig;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import net.minecraft.world.gen.feature.StructureFeature;
+import xyz.nekogaming.mods.structure.skystruct.SkyStruct;
+import xyz.nekogaming.mods.structure.skystruct.structure.EnderTowerStructurePiece;
+import xyz.nekogaming.mods.structure.skystruct.utils.CommonUtils;
 
 import javax.annotation.Nullable;
 
@@ -33,9 +35,8 @@ public class EnderTowerStructure extends StructureFeature<DefaultFeatureConfig> 
     @Nullable
     @Override
     public BlockPos locateStructure(WorldView worldView, StructureAccessor structureAccessor, BlockPos blockPos, int i, boolean skipExistingChunks, long l, StructureConfig structureConfig) {
-        if (worldView.getDimension() == ModMain.surfaceTypeObject)
-        {
-            return Utils.locateStructureFast(worldView, structureAccessor, blockPos, skipExistingChunks, l, structureConfig, this);
+        if (worldView.getDimension() == ModMain.surfaceTypeObject) {
+            return CommonUtils.locateStructureFast(worldView, structureAccessor, blockPos, skipExistingChunks, l, structureConfig, this);
         }
         return null;
     }
@@ -51,7 +52,7 @@ public class EnderTowerStructure extends StructureFeature<DefaultFeatureConfig> 
             BlockPos StructureCenterOffset = new BlockPos(structure.getSize().getX() / 2, 0, structure.getSize().getZ() / 2);
             BlockPos ChunkCenter = (new ChunkPos(i, j)).getCenterBlockPos();
             int height = chunkGenerator.getHeight(ChunkCenter.getX(), ChunkCenter.getZ(), Heightmap.Type.WORLD_SURFACE) - 5;
-            BlockPos StructureCorner = new BlockPos(ChunkCenter.getX()-StructureCenterOffset.getX(),height,ChunkCenter.getZ()-StructureCenterOffset.getZ());
+            BlockPos StructureCorner = new BlockPos(ChunkCenter.getX() + 2, height, ChunkCenter.getZ() + 2);
             this.children.add(new EnderTowerStructurePiece(StructureCorner, ENDER_TOWER, structure, StructureCenterOffset));
             this.setBoundingBoxFromChildren();
         }

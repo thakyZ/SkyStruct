@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "finished=false": { "model": "skystruct:block/tower_binder" },
+    "finished=true": { "model": "skystruct:block/tower_binder_finished" }
+  }
+}
