@@ -10,6 +10,7 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.structure.StructurePieceType;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.biome.Biome;
@@ -19,6 +20,7 @@ import net.minecraft.world.gen.feature.ConfiguredStructureFeature;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import net.minecraft.world.gen.feature.FeatureConfig;
 import net.minecraft.world.gen.feature.StructureFeature;
+import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import xyz.nekogaming.mods.structure.skystruct.blockentity.TowerBinderBlockEntity;
@@ -27,7 +29,7 @@ import xyz.nekogaming.mods.structure.skystruct.structure.EnderTowerStructurePiec
 import xyz.nekogaming.mods.structure.skystruct.world.gen.structure.EnderTowerStructure;
 
 public class SkyStruct implements ModInitializer {
-    public static final Logger LOGGER = LogManager.getLogger();
+    public static final Logger LOGGER = LogManager.getLogger("SkyStruct");
     public static final String MODID = "skystruct";
 
     public static final StructureFeature<DefaultFeatureConfig> ENDER_TOWER = new EnderTowerStructure();
@@ -54,6 +56,7 @@ public class SkyStruct implements ModInitializer {
 
     @Override
     public void onInitialize() {
+        SkyStruct.LOGGER.log(Level.INFO, "Skylands Structures is now being imitialized!");
         Registry.register(Registry.BLOCK, SkyStruct.id("tower_binder"), TOWER_BINDER);
         Registry.register(Registry.ITEM, SkyStruct.id("tower_binder"), new BlockItem(TOWER_BINDER, new Item.Settings().group(ItemGroup.REDSTONE)));
         TOWER_BINDER_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, SkyStruct.MODID + ":tower_binder", BlockEntityType.Builder.create(TowerBinderBlockEntity::new, TOWER_BINDER).build(null));
