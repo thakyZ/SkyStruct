@@ -4,13 +4,13 @@ import com.qouteall.immersive_portals.ModMain;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.CommandBlockBlockEntity;
 import net.minecraft.util.Tickable;
-import xyz.nekogaming.mods.structure.skystruct.SkyStruct;
 import xyz.nekogaming.mods.structure.skystruct.blocks.TowerBinder;
+import xyz.nekogaming.mods.structure.skystruct.init.Features;
 
 public class TowerBinderBlockEntity extends BlockEntity implements Tickable {
 
     public TowerBinderBlockEntity() {
-        super(SkyStruct.TOWER_BINDER_ENTITY);
+        super(Features.TOWER_BINDER_ENTITY);
     }
 
     @Override
@@ -24,7 +24,7 @@ public class TowerBinderBlockEntity extends BlockEntity implements Tickable {
                     if (blockEntity1 instanceof CommandBlockBlockEntity && blockEntity2 instanceof CommandBlockBlockEntity) {
                         ((CommandBlockBlockEntity) (blockEntity1)).method_23359();
                         ((CommandBlockBlockEntity) (blockEntity2)).method_23359();
-                        world.setBlockState(pos, SkyStruct.TOWER_BINDER.getDefaultState().with(TowerBinder.FINISHED, true), 2);
+                        world.setBlockState(pos, Features.TOWER_BINDER.getDefaultState().with(TowerBinder.FINISHED, true), 2);
                     }
                 }
             }

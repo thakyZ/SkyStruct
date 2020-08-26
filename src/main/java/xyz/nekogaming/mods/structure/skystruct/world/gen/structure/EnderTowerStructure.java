@@ -1,6 +1,5 @@
 package xyz.nekogaming.mods.structure.skystruct.world.gen.structure;
 
-import com.qouteall.immersive_portals.ModMain;
 import net.minecraft.structure.Structure;
 import net.minecraft.structure.StructureManager;
 import net.minecraft.structure.StructureStart;
@@ -16,6 +15,7 @@ import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.chunk.StructureConfig;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import net.minecraft.world.gen.feature.StructureFeature;
+import org.apache.logging.log4j.Level;
 import xyz.nekogaming.mods.structure.skystruct.SkyStruct;
 import xyz.nekogaming.mods.structure.skystruct.structure.EnderTowerStructurePiece;
 import xyz.nekogaming.mods.structure.skystruct.utils.CommonUtils;
@@ -23,8 +23,15 @@ import xyz.nekogaming.mods.structure.skystruct.utils.CommonUtils;
 import javax.annotation.Nullable;
 
 public class EnderTowerStructure extends StructureFeature<DefaultFeatureConfig> {
-    public EnderTowerStructure() {
+    protected int spawnrate;
+    protected int minHeight;
+    protected int maxHeight;
+
+    public EnderTowerStructure(int spawnrate, int minHeight, int maxHeight) {
         super(DefaultFeatureConfig.CODEC);
+        this.spawnrate = spawnrate;
+        this.minHeight = minHeight;
+        this.maxHeight = maxHeight;
     }
 
     @Override
@@ -35,10 +42,7 @@ public class EnderTowerStructure extends StructureFeature<DefaultFeatureConfig> 
     @Nullable
     @Override
     public BlockPos locateStructure(WorldView worldView, StructureAccessor structureAccessor, BlockPos blockPos, int i, boolean skipExistingChunks, long l, StructureConfig structureConfig) {
-        if (worldView.getDimension() == ModMain.surfaceTypeObject) {
-            return CommonUtils.locateStructureFast(worldView, structureAccessor, blockPos, skipExistingChunks, l, structureConfig, this);
-        }
-        return null;
+        return CommonUtils.locateStructureFast(worldView, "tower", structureAccessor, blockPos, skipExistingChunks, l, structureConfig, this);
     }
 
     public static class Start extends StructureStart<DefaultFeatureConfig> {
@@ -47,6 +51,7 @@ public class EnderTowerStructure extends StructureFeature<DefaultFeatureConfig> 
         }
 
         public void init(ChunkGenerator chunkGenerator, StructureManager structureManager, int i, int j, Biome biome, DefaultFeatureConfig featureConfig) {
+            SkyStruct.LOGGER.log(Level.INFO, "Initialized generating the Ender Tower");
             Identifier ENDER_TOWER = new Identifier(SkyStruct.MODID + ":tower/endertower");
             Structure structure = structureManager.getStructureOrBlank(ENDER_TOWER);
             BlockPos StructureCenterOffset = new BlockPos(structure.getSize().getX() / 2, 0, structure.getSize().getZ() / 2);

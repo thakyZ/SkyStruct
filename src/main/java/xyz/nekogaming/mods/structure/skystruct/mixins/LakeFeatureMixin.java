@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import xyz.nekogaming.mods.structure.skystruct.SkyStruct;
+import xyz.nekogaming.mods.structure.skystruct.init.Features;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +33,7 @@ public class LakeFeatureMixin {
         chunksToScan.add(world.getChunk(blockPos.add(16, 0, -16)));
         chunksToScan.add(world.getChunk(blockPos.add(-16, 0, 16)));
         for (Chunk chunk : chunksToScan) {
-            if (!chunk.getStructureReferences(SkyStruct.ENDER_TOWER_CONFIG.field_24835).isEmpty()) {
+            if (!chunk.getStructureReferences(Features.ENDER_TOWER_CONFIG.field_24835).isEmpty()) {
                 info.setReturnValue(false);
                 break;
             }

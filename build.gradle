@@ -32,6 +32,14 @@ dependencies {
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
     //Dependencies
+    modImplementation "me.shedaniel.cloth:config-2:${project.cloth_config_version}"
+    include "me.shedaniel.cloth:config-2:${project.cloth_config_version}"
+
+    modImplementation "io.github.prospector:modmenu:${project.mod_menu_version}"
+
+    modImplementation "me.sargunvohra.mcmods:autoconfig1u:${project.auto_config_version}"
+    include "me.sargunvohra.mcmods:autoconfig1u:${project.auto_config_version}"
+
     modImplementation "com.github.qouteall:ImmersivePortalsMod:${project.immersive_portals_version}"
 
     modImplementation "net.earthcomputer:libstructure:${project.libstructure_version}"

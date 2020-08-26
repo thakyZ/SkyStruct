@@ -18,6 +18,9 @@
   "entrypoints": {
     "main": [
       "xyz.nekogaming.mods.structure.skystruct.SkyStruct"
+    ],
+    "modmenu": [
+      "xyz.nekogaming.mods.structure.skystruct.integration.ModMenuConfig"
     ]
   },
   "mixins": [
