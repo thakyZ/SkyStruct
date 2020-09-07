@@ -7,6 +7,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockBox;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
+import net.minecraft.util.registry.DynamicRegistryManager;
 import net.minecraft.world.Heightmap;
 import net.minecraft.world.WorldView;
 import net.minecraft.world.biome.Biome;
@@ -23,9 +24,9 @@ import xyz.nekogaming.mods.structure.skystruct.utils.CommonUtils;
 import javax.annotation.Nullable;
 
 public class EnderTowerStructure extends StructureFeature<DefaultFeatureConfig> {
-    protected int spawnrate;
-    protected int minHeight;
-    protected int maxHeight;
+    protected final int spawnrate;
+    protected final int minHeight;
+    protected final int maxHeight;
 
     public EnderTowerStructure(int spawnrate, int minHeight, int maxHeight) {
         super(DefaultFeatureConfig.CODEC);
@@ -50,12 +51,13 @@ public class EnderTowerStructure extends StructureFeature<DefaultFeatureConfig> 
             super(structureFeature, i, j, blockBox, k, l);
         }
 
-        public void init(ChunkGenerator chunkGenerator, StructureManager structureManager, int i, int j, Biome biome, DefaultFeatureConfig featureConfig) {
+        @Override
+        public void init(DynamicRegistryManager registryManager, ChunkGenerator chunkGenerator, StructureManager manager, int chunkX, int chunkZ, Biome biome, DefaultFeatureConfig config) {
             SkyStruct.LOGGER.log(Level.INFO, "Initialized generating the Ender Tower");
             Identifier ENDER_TOWER = new Identifier(SkyStruct.MODID + ":tower/endertower");
-            Structure structure = structureManager.getStructureOrBlank(ENDER_TOWER);
+            Structure structure = manager.getStructureOrBlank(ENDER_TOWER);
             BlockPos StructureCenterOffset = new BlockPos(structure.getSize().getX() / 2, 0, structure.getSize().getZ() / 2);
-            BlockPos ChunkCenter = (new ChunkPos(i, j)).getCenterBlockPos();
+            BlockPos ChunkCenter = (new ChunkPos(chunkX, chunkZ)).getStartPos().add(8.0d, 0.0d, 8.0d);
             int height = chunkGenerator.getHeight(ChunkCenter.getX(), ChunkCenter.getZ(), Heightmap.Type.WORLD_SURFACE) - 5;
             BlockPos StructureCorner = new BlockPos(ChunkCenter.getX() + 2, height, ChunkCenter.getZ() + 2);
             this.children.add(new EnderTowerStructurePiece(StructureCorner, ENDER_TOWER, structure, StructureCenterOffset));

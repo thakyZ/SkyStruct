@@ -3,9 +3,8 @@ package xyz.nekogaming.mods.structure.skystruct;
 import me.sargunvohra.mcmods.autoconfig1u.AutoConfig;
 import me.sargunvohra.mcmods.autoconfig1u.serializer.JanksonConfigSerializer;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.event.registry.RegistryEntryAddedCallback;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.util.registry.*;
 import net.minecraft.world.biome.Biome;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -14,8 +13,6 @@ import xyz.nekogaming.mods.structure.skystruct.config.MainConfig;
 import xyz.nekogaming.mods.structure.skystruct.init.AddFeatures;
 import xyz.nekogaming.mods.structure.skystruct.init.Features;
 
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -29,16 +26,25 @@ public class SkyStruct implements ModInitializer {
         return new Identifier(MODID, name);
     }
 
-    public static void addFeaturesToBiomes(Biome biome, Identifier biomeID, Map<String, List<String>> allBiomeList) {
+    public static void addFeaturesToBiomes(MutableRegistry<Biome> biomeReg, Biome biome, Identifier biomeID, Map<String, List<String>> allBiomelists) {
         String biomeNamespace = biomeID.getNamespace();
         String biomePath = biomeID.getPath();
 
-        if (isBiomeAllowed("tower", biomeID, allBiomeList, MainConfig.TowersConfig.biomesIsWhitelist)) {
-            AddFeatures.addTowers(biome, biomeNamespace, biomePath);
+        for (Map.Entry<String, List<String>> entry : allBiomelists.entrySet()) {
+            for (String value : entry.getValue()) {
+                SkyStruct.LOGGER.info(value);
+            }
+        }
+
+        if (isBiomeAllowed("tower", biomeID, allBiomelists, MainConfig.TowersConfig.biomesIsWhitelist)) {
+            AddFeatures.addTowers(biomeReg, biome, biomeNamespace, biomePath);
         }
     }
 
     public static boolean isBiomeAllowed(String structureType, Identifier biomeID, Map<String, List<String>> allBiomeList, boolean isWhitelist) {
+        if (allBiomeList.entrySet().size() == 0) {
+            return true;
+        }
         boolean check = allBiomeList.get(structureType).stream().noneMatch(blacklistedBiome -> blacklistedBiome.equals(biomeID.toString()));
         if (isWhitelist) {
             return !check;
@@ -54,16 +60,6 @@ public class SkyStruct implements ModInitializer {
 
         Features.registerFeatures();
 
-        //Gets filtered biome IDs for each structure type
-        //Done here so the map can be garbage collected later
-        Map<String, List<String>> allBiomesLists = new HashMap<>();
-        allBiomesLists.put("tower", Arrays.asList(MainConfig.TowersConfig.biomes.enderTowerBiomes.split(",")));
-
-        for (Biome biome : Registry.BIOME) {
-            addFeaturesToBiomes(biome, Registry.BIOME.getId(biome), allBiomesLists);
-        }
-
-        RegistryEntryAddedCallback.event(Registry.BIOME).register((i, identifier, biome) -> addFeaturesToBiomes(biome, identifier, allBiomesLists));
         SkyStruct.LOGGER.log(Level.INFO, "Skylands Structures has been imitialized!");
     }
 }

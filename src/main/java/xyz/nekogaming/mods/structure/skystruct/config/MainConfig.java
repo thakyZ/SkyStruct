@@ -9,5 +9,5 @@ import xyz.nekogaming.mods.structure.skystruct.SkyStruct;
 public class MainConfig implements ConfigData {
     @ConfigEntry.Category("Towers")
     @ConfigEntry.Gui.TransitiveObject
-    public TowersConfig TowersConfig = new TowersConfig();
+    public final TowersConfig TowersConfig = new TowersConfig();
 }

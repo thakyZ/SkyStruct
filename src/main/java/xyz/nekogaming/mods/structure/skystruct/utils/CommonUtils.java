@@ -21,6 +21,7 @@ import xyz.nekogaming.mods.structure.skystruct.SkyStruct;
 import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class CommonUtils {
     public static BlockPos locateStructureFast(WorldView worldView, String structureType, StructureAccessor structureAccessor, BlockPos blockPos, boolean skipExistingChunks, long seed, StructureConfig structureConfig, StructureFeature<DefaultFeatureConfig> structure) {
@@ -40,8 +41,8 @@ public class CommonUtils {
                         if (xEdge || zEdge) {
                             int trueChunkX = chunkX + spacing * xRadius;
                             int trueChunkZ = chunkZ + spacing * zRadius;
-                            if (worldView.getBiome(mutable.set(trueChunkX << 4, 1, trueChunkZ << 4)).hasStructureFeature(structure)) {
-                                ChunkPos chunkPos = structure.method_27218(structureConfig, seed, chunkRandom, trueChunkX, trueChunkZ);
+                            if (worldView.getBiome(mutable.set(trueChunkX << 4, 1, trueChunkZ << 4)).getGenerationSettings().hasStructureFeature(structure)) {
+                                ChunkPos chunkPos = structure.getStartChunk(structureConfig, seed, chunkRandom, trueChunkX, trueChunkZ);
                                 Chunk chunk = worldView.getChunk(chunkPos.x, chunkPos.z, ChunkStatus.STRUCTURE_STARTS);
                                 StructureStart<?> structureStart = structureAccessor.getStructureStart(ChunkSectionPos.from(chunk.getPos(), 0), structure, chunk);
                                 if (structureStart != null && structureStart.hasChildren()) {
@@ -66,6 +67,7 @@ public class CommonUtils {
         return null;
     }
 
+    @SuppressWarnings("unused")
     @Nullable
     public static Pair<BlockPos, BlockState> getChunkBlock(BlockPos origin, BlockPos offset, BlockState expectedState, Chunk chunk) {
         BlockPos i = origin.add(offset);
@@ -105,4 +107,27 @@ public class CommonUtils {
             return check;
         }
     }
+
+    public static boolean checkDimensionInWhitelist(World world, String structure) {
+        switch (structure) {
+            case "tower":
+                return checkTowerWhitelist(world);
+        }
+        return false;
+    }
+
+    private static boolean checkTowerWhitelist(World world) {
+        boolean test = false;
+        if (!SkyStruct.MainConfig.TowersConfig.dimensionsIsWhitelist)
+        {
+            test = true;
+        }
+        for (String dimensionKey : SkyStruct.MainConfig.TowersConfig.dimensions.enderTowerDimensions.split(",")) {
+            if (Objects.requireNonNull(world.getServer()).getRegistryManager().getDimensionTypes().containsId(new Identifier(dimensionKey))) {
+                test = !test;
+            }
+        }
+        return test;
+    }
+
 }

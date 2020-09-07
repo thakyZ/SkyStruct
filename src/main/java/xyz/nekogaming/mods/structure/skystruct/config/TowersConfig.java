@@ -10,30 +10,30 @@ public class TowersConfig implements ConfigData {
     @ConfigEntry.Gui.CollapsibleObject
     @ConfigEntry.Gui.Tooltip
     @Comment("Add the towers to modded biomes of the same categories and types.")
-    public boolean toModdedBiomes = true;
+    public final boolean toModdedBiomes = true;
 
     @ConfigEntry.Gui.CollapsibleObject
-    public Biomes biomes = new Biomes();
+    public final Biomes biomes = new Biomes();
 
     @ConfigEntry.Gui.Tooltip
     @Comment("Make the tower biome list as a whitelist or a blacklist.")
-    public boolean biomesIsWhitelist = false;
+    public final boolean biomesIsWhitelist = false;
 
     @ConfigEntry.Gui.CollapsibleObject
-    public Dimensions dimensions = new Dimensions();
+    public final Dimensions dimensions = new Dimensions();
 
     @ConfigEntry.Gui.Tooltip
     @Comment("Set the dimension list as a whitelist or a blacklist.")
-    public boolean dimensionsIsWhitelist = false;
+    public final boolean dimensionsIsWhitelist = false;
 
     @ConfigEntry.Gui.CollapsibleObject
-    public Spawnrate spawnrate = new Spawnrate();
+    public final Spawnrate spawnrate = new Spawnrate();
 
     @ConfigEntry.Gui.CollapsibleObject
-    public MaxHeight maxHeight = new MaxHeight();
+    public final MaxHeight maxHeight = new MaxHeight();
 
     @ConfigEntry.Gui.CollapsibleObject
-    public MinHeight minHeight = new MinHeight();
+    public final MinHeight minHeight = new MinHeight();
 
     public static class Biomes {
         @ConfigEntry.Gui.Tooltip(count = 3)
@@ -41,7 +41,7 @@ public class TowersConfig implements ConfigData {
             + "\nthe towers to spawn in. Separate each ID with a comma ,"
             + "\n"
             + "\nExample: \"minecraft:ice_spikes,example_mod:example_biome\"")
-        public String enderTowerBiomes = "";
+        public final String enderTowerBiomes = "";
     }
 
     public static class Dimensions {
@@ -51,7 +51,7 @@ public class TowersConfig implements ConfigData {
             + "\n"
             + "\nExample: \"minecraft:the_nether,example_mod:example_dim\""
             + "\nDefault: \"minecraft:the_nether,minecraft:the_end\"")
-        public String enderTowerDimensions = "minecraft:the_nether,minecraft:the_end";
+        public final String enderTowerDimensions = "minecraft:the_nether,minecraft:the_end";
     }
 
     public static class Spawnrate {
@@ -59,7 +59,7 @@ public class TowersConfig implements ConfigData {
         @Comment("Spawn attempts per chunk."
             + "\n0 for no towers at all and 1000 for max spawnrate.")
         @ConfigEntry.BoundedDiscrete(min = 0, max = 1000)
-        public int enderTowerSpawnrate = 90;
+        public final int enderTowerSpawnrate = 90;
     }
 
     public static class MaxHeight {
@@ -68,7 +68,7 @@ public class TowersConfig implements ConfigData {
             + "\nNote: The dungeon will spawn between min and max y height set in config."
             + "\nSetting this to below min height config will make dungeon spawn only at min height.")
         @ConfigEntry.BoundedDiscrete(min = 2, max = 255)
-        public int enderTowerMaxHeight = 255;
+        public final int enderTowerMaxHeight = 255;
     }
 
     public static class MinHeight {
@@ -76,6 +76,6 @@ public class TowersConfig implements ConfigData {
         @Comment("Minimum Y height that this dungeon can spawn at. Default is 2."
             + "\nNote: The dungeon will spawn between min and max y height set in config.")
         @ConfigEntry.BoundedDiscrete(min = 2, max = 255)
-        public int enderTowerMinHeight = 30;
+        public final int enderTowerMinHeight = 30;
     }
 }

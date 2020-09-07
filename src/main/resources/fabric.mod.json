@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "skystruct",
-  "version": "${version}",
+  "version": "${mod_version}",
   "name": "SkyStruct",
   "description": "Spawns Structures in the Immersive Portals Alternate Dimension 2",
   "authors": [
@@ -27,9 +27,8 @@
     "skystruct.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=0.8.9+build.203",
+    "fabricloader": ">=${dep_loader_version}",
     "fabric": "*",
-    "minecraft": "1.16.1",
-    "immersive_portals": "*"
+    "minecraft": "${dep_minecraft_version}"
   }
 }

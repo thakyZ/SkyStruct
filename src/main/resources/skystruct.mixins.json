@@ -4,7 +4,9 @@
   "package": "xyz.nekogaming.mods.structure.skystruct.mixins",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "LakeFeatureMixin"
+    "GenerationSettingsAccessor",
+    "LakeFeatureMixin",
+    "MinecraftServerMixin"
   ],
   "client": [
   ],

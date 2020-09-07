@@ -14,7 +14,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.Heightmap;
 import net.minecraft.world.ServerWorldAccess;
-import net.minecraft.world.WorldAccess;
+import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.StructureAccessor;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import org.apache.logging.log4j.Level;
@@ -46,19 +46,21 @@ public class EnderTowerStructurePiece extends SimpleStructurePiece {
         this.setStructureData(structure, this.pos, structurePlacementData);
     }
 
-    public boolean generate(ServerWorldAccess serverWorldAccess, StructureAccessor structureAccessor, ChunkGenerator chunkGenerator, Random random, BlockBox boundingBox, ChunkPos chunkPos, BlockPos blockPos) {
+    @Override
+    public boolean generate(StructureWorldAccess structureWorldAccess, StructureAccessor structureAccessor, ChunkGenerator chunkGenerator, Random random, BlockBox boundingBox, ChunkPos chunkPos, BlockPos blockPos) {
         boolean returnVar = false;
-        SkyStruct.LOGGER.log(Level.INFO, String.format("BlockPos: [~, %d, ~] || Config: [%d, %d] || Box: [%d] || Calc: [%d] || dim: [%s]", blockPos.getY(), SkyStruct.MainConfig.TowersConfig.minHeight.enderTowerMinHeight, SkyStruct.MainConfig.TowersConfig.maxHeight.enderTowerMaxHeight, this.structure.getSize().getY(), (SkyStruct.MainConfig.TowersConfig.maxHeight.enderTowerMaxHeight - this.structure.getSize().getY()), serverWorldAccess.getWorld().getRegistryKey().getValue()));
-        if (CommonUtils.generateInThisDimension("tower", serverWorldAccess.getWorld().getRegistryKey().getValue())) {
+        SkyStruct.LOGGER.log(Level.INFO, String.format("BlockPos: [~, %d, ~] || Config: [%d, %d] || Box: [%d] || Calc: [%d] || dim: [%s]", blockPos.getY(), SkyStruct.MainConfig.TowersConfig.minHeight.enderTowerMinHeight, SkyStruct.MainConfig.TowersConfig.maxHeight.enderTowerMaxHeight, this.structure.getSize().getY(), (SkyStruct.MainConfig.TowersConfig.maxHeight.enderTowerMaxHeight - this.structure.getSize().getY()), structureWorldAccess.toServerWorld().getRegistryKey().getValue()));
+        if (CommonUtils.generateInThisDimension("tower", structureWorldAccess.toServerWorld().getRegistryKey().getValue())) {
             if (blockPos.getY() > SkyStruct.MainConfig.TowersConfig.minHeight.enderTowerMinHeight && blockPos.getY() < (SkyStruct.MainConfig.TowersConfig.maxHeight.enderTowerMaxHeight - this.structure.getSize().getY())) {
                 SkyStruct.LOGGER.log(Level.INFO, "Generating the Ender Tower Piece");
-                BlockPos topPos = serverWorldAccess.getTopPosition(Heightmap.Type.WORLD_SURFACE, blockPos);
-                returnVar = super.generate(serverWorldAccess, structureAccessor, chunkGenerator, random, boundingBox, chunkPos, topPos);
+                BlockPos topPos = structureWorldAccess.getTopPosition(Heightmap.Type.WORLD_SURFACE, blockPos);
+                returnVar = super.generate(structureWorldAccess, structureAccessor, chunkGenerator, random, boundingBox, chunkPos, topPos);
             }
         }
         return returnVar;
     }
 
-    protected void handleMetadata(String metadata, BlockPos pos, WorldAccess world, Random random, BlockBox boundingBox) {
+    @Override
+    protected void handleMetadata(String metadata, BlockPos pos, ServerWorldAccess serverWorldAccess, Random random, BlockBox boundingBox) {
     }
 }

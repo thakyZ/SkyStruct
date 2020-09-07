@@ -1,6 +1,5 @@
 package xyz.nekogaming.mods.structure.skystruct.blocks;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
@@ -10,11 +9,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
 import net.minecraft.world.BlockView;
 import xyz.nekogaming.mods.structure.skystruct.blockentity.TowerBinderBlockEntity;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 public class TowerBinder extends Block implements BlockEntityProvider {
@@ -32,10 +29,10 @@ public class TowerBinder extends Block implements BlockEntityProvider {
     }
 
     @Override
-    public void buildTooltip(ItemStack stack, @Nullable BlockView world, List<Text> tooltip, TooltipContext options) {
+    public void appendTooltip(ItemStack stack, @org.jetbrains.annotations.Nullable BlockView world, List<Text> tooltip, TooltipContext options) {
         Text tooltip_text = Text.Serializer.fromJson("{ \"translate\": \"item.skystruct.tower_binder.tooltip\", \"color\": \"#5555FF\" }");
         tooltip.add(tooltip_text);
-        super.buildTooltip(stack, world, tooltip, options);
+        super.appendTooltip(stack, world, tooltip, options);
     }
 
     @Override

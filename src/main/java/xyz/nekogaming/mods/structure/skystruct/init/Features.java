@@ -1,6 +1,6 @@
 package xyz.nekogaming.mods.structure.skystruct.init;
 
-import net.earthcomputer.libstructure.LibStructure;
+import net.fabricmc.fabric.api.structure.v1.FabricStructureBuilder;
 import net.minecraft.block.Block;
 import net.minecraft.block.Material;
 import net.minecraft.block.entity.BlockEntityType;
@@ -29,7 +29,7 @@ public class Features {
   public static BlockEntityType<TowerBinderBlockEntity> TOWER_BINDER_ENTITY;
 
   public static void registerFeatures() {
-    LibStructure.registerStructure(SkyStruct.id("ender_tower"), ENDER_TOWER, GenerationStep.Feature.SURFACE_STRUCTURES, new StructureConfig(SkyStruct.MainConfig.TowersConfig.spawnrate.enderTowerSpawnrate, (int) (SkyStruct.MainConfig.TowersConfig.spawnrate.enderTowerSpawnrate * 0.75f), 241818742), ENDER_TOWER_CONFIG);
+    FabricStructureBuilder.create(SkyStruct.id("ender_tower"), ENDER_TOWER).step(GenerationStep.Feature.SURFACE_STRUCTURES).defaultConfig(new StructureConfig(SkyStruct.MainConfig.TowersConfig.spawnrate.enderTowerSpawnrate, (int) (SkyStruct.MainConfig.TowersConfig.spawnrate.enderTowerSpawnrate * 0.75f), 241818742)).superflatFeature(ENDER_TOWER_CONFIG).register();
     Registry.register(Registry.BLOCK, SkyStruct.id("tower_binder"), TOWER_BINDER);
     Registry.register(Registry.ITEM, SkyStruct.id("tower_binder"), new BlockItem(TOWER_BINDER, new Item.Settings().group(ItemGroup.REDSTONE)));
     TOWER_BINDER_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, SkyStruct.MODID + ":tower_binder", BlockEntityType.Builder.create(TowerBinderBlockEntity::new, TOWER_BINDER).build(null));
