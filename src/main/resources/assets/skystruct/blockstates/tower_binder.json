@@ -1,0 +1,89 @@
+{
+  "variants": {
+    "finished=false": {
+      "model": "skystruct:block/tower_binder"
+    },
+    "finished=true": {
+      "model": "skystruct:block/tower_binder_finished"
+    }
+  },
+  "multipart": [
+    {
+      "apply": {
+        "model": "skystruct:block/tower_binder"
+      }
+    },
+    {
+      "when": {
+        "top": true,
+        "finished": true
+      },
+      "apply": {
+        "model": "skystruct:block/tower_binder_finished",
+        "x": 0,
+        "y": 0,
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "bottom": true,
+        "finished": true
+      },
+      "apply": {
+        "model": "skystruct:block/tower_binder_finished",
+        "x": 180,
+        "y": 0,
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "north": true,
+        "finished": true
+      },
+      "apply": {
+        "model": "skystruct:block/tower_binder_finished",
+        "x": 90,
+        "y": 90,
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "south": true,
+        "finished": true
+      },
+      "apply": {
+        "model": "skystruct:block/tower_binder_finished",
+        "x": 90,
+        "y": 180,
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "east": true,
+        "finished": true
+      },
+      "apply": {
+        "model": "skystruct:block/tower_binder_finished",
+        "x": 90,
+        "y": 0,
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "west": true,
+        "finished": true
+      },
+      "apply": {
+        "model": "skystruct:block/tower_binder_finished",
+        "x": 90,
+        "y": 270,
+        "uvlock": true
+      }
+    }
+  ]
+}

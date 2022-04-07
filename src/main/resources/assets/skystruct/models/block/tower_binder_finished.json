@@ -1,0 +1,7 @@
+{
+  "parent": "block/cube_top",
+  "textures": {
+    "side": "skystruct:block/tower_binder_side",
+    "top": "skystruct:block/tower_binder_active"
+  }
+}
